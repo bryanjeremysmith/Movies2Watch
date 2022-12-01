@@ -5,6 +5,6 @@ typing this for a sample commit message
 
 Hello, I'm making a new commit.
 
-hello 
+hello, test
 
 # Bryan Jeremy Smith is a collaborator
