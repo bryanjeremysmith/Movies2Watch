@@ -19,6 +19,9 @@ function searchIMDB(q){
         $("#movie-plot").text(data.Plot);
         searchYouTube(q + " " + data.Year);
     })
+    .catch(function (error){
+        console.log(error);
+    });
 }
 
 function searchYouTube(q){
@@ -37,5 +40,8 @@ function searchYouTube(q){
     })
     .then(function (data){
         $('#movie-embedded-video').html('<iframe src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
+    })
+    .catch(function (error){
+        console.log(error);
     });
 }
