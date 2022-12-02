@@ -1,0 +1,122 @@
+* {
+    /* border: 1px dashed red; */
+    font-family: 'Open Sans', sans-serif !important;
+}
+    
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #f4f4f4 !important;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+#container {
+    background-color: #ffffff;
+    max-width: 1400px;
+    min-height: 1000px;
+    margin: auto;
+}
+
+main {
+    padding: 10px;
+  }
+
+#logoText {
+    font-weight: 800;
+    padding-left: 20px;
+    font-size: 30px;
+    font-style: italic;
+}
+
+#mainBox {
+    text-align: center;
+    padding: 150px;
+   
+}
+.button {
+    font-weight: bold;
+}
+
+#startBtn {
+    padding: 20px;
+    width: 600px;
+    text-align: center;
+    margin: auto;
+    margin-top: 90px !important;
+   
+}
+.rounded {
+    border-radius: 15px !important;
+}
+
+.btn-large {
+    font-size: 22px !important;
+    width: 200px;
+}
+
+header {
+   display: flex;
+   justify-content: space-between;
+  
+}
+
+#smallSearch .query, .button {
+    display: inline-block !important;
+
+}
+
+#smallSearch .query {
+    width: 70%;
+}
+
+#smallSearch .button {
+    margin-top: 10px;
+}
+
+#cardHolder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    margin-top: 45px;
+
+}
+
+#listContainer {
+    text-align: center;
+    padding: 20px; 
+   
+}
+
+#moviesList li {
+    justify-content: center;
+    color: #1779ba;
+    margin-top: 10px;
+    list-style: none;
+    border: 2px solid #1779ba;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 7px;
+    
+}
+.card-section {
+    position: relative;
+    padding-bottom: 80px !important;
+}
+
+.cardBtnHolder {
+    bottom: 10px;   
+    position: absolute;
+
+}
+.buttonAlt {
+    background-color: white !important;
+    color: #1779ba !important;
+    border: 2px solid #1779ba !important;
+    margin-left: 15px !important;
+    
+}
