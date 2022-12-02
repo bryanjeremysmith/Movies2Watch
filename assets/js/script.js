@@ -16,6 +16,8 @@ function appendToMoviesList() {
     var newMovie = document.createElement("li");
     newMovie.textContent = $("#movie-title").text();
     movieList.appendChild(newMovie);
+
+    localStorage.setItem(movieList);
 };
 
 function searchAPIs() {
