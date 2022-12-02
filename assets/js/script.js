@@ -18,7 +18,6 @@ function appendToMoviesList() {
     movieList.appendChild(newMovie);
 };
 
-// Search for a specified string.
 function searchAPIs() {
     search();
 
