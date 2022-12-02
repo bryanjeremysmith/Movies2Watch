@@ -16,6 +16,14 @@ function appendToMoviesList() {
     var newMovie = document.createElement("li");
     newMovie.textContent = $("#movie-title").text();
     movieList.appendChild(newMovie);
+
+    newMovie.addEventListener("click", function(){
+        search();
+
+        var q = this.textContent;
+
+        searchIMDB(q);
+    });
 };
 
 // Search for a specified string.
