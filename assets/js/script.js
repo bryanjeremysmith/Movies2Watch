@@ -1,9 +1,44 @@
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
 var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
 
-// Search for a specified string.
+$(document).ready(function() {
+    $("#cardHolder").hide();
+    $("#smallSearch").hide();           
+});
+
 function search() {
+    $("#startBtn").hide();
+    $("#smallSearch").show();
+};
+
+function appendToMoviesList() {
+    var movieList = document.querySelector("#moviesList");
+    var newMovie = document.createElement("li");
+    newMovie.textContent = $("#movie-title").text();
+    movieList.appendChild(newMovie);
+
+    newMovie.addEventListener("click", function(){
+        search();
+
+        var q = this.textContent;
+
+        searchIMDB(q);
+    });
+};
+
+// Search for a specified string.
+function searchAPIs() {
+    search();
+
     var q = $('#query').val();
+
+    searchIMDB(q);
+}
+
+function searchAPIsSmall() {
+    search();
+
+    var q = $('#querySmall').val();
 
     searchIMDB(q);
 }
@@ -39,7 +74,8 @@ function searchYouTube(q){
         return response.json();
     })
     .then(function (data){
-        $('#movie-embedded-video').html('<iframe src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
+        $('#movie-embedded-video').html('<iframe width="480" height="360" src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
+        $("#cardHolder").show();
     })
     .catch(function (error){
         console.log(error);
