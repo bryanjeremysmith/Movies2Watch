@@ -14,9 +14,11 @@ h1 {
     font-weight: 400;
 }
 
+/* added a min width to fix video responsivness */
 #container {
     background-color: #ffffff;
     max-width: 1400px;
+    min-width: 490px;
     min-height: 1000px;
     margin: auto;
 }
