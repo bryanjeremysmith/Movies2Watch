@@ -74,7 +74,7 @@ function searchYouTube(q){
         return response.json();
     })
     .then(function (data){
-        $('#movie-embedded-video').html('<iframe width="480" height="360" src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
+        $('#movie-embedded-video').html('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
         $("#cardHolder").show();
     })
     .catch(function (error){
