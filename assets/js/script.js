@@ -26,7 +26,6 @@ function appendToMoviesList() {
     });
 };
 
-// Search for a specified string.
 function searchAPIs() {
     search();
 
