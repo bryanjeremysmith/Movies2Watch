@@ -36,16 +36,14 @@
                 </div>
                 <!-- Result Cards, added buttons-->
                 <div id="cardHolder" class="grid-x">
-                    <!-- changed div class to xlarge for responsiveness -->
-                    <div class="card xlarge">
+                    <div class="card">
                         <!-- <img src="https://i.ytimg.com/vi/HDWylEQSwFo/hqdefault.jpg"> -->
                         <div id="movie-embedded-video"></div>
                         <div class="card-section">
                           <h4 id="movie-title">Movie Title "Memento"</h4>
                           <p id="movie-plot">Movie Plot. "A men with short-term memory loss attempts to track down his wife's murderer."</p>
                           <div class="cardBtnHolder">
-                          <button class="button rounded" id="watch-trailer">Watch Trailer</button>
-                          <button class="button rounded buttonAlt" id="add-movie" onclick="appendToMoviesList()">+ Add</button>
+                          <button class="button rounded" onclick="appendToMoviesList()">+ Add to Watch List</button>
                           </div>
                         </div>
                     </div>
@@ -71,8 +69,7 @@
                           </div>
                         </div>
                     </div> -->
-                </div>
-                
+                </div>  
             </div>
             <!-- movie list -->
             <div id="listContainer" class="cell medium-6 large-3">
@@ -84,7 +81,8 @@
                 <li>Movie 4</li> -->
             </ul>
             </div>
-        <!-- </section> -->
+        </section>
+
         <!-- <section id="results">
             <div id="movie-title"></div>
             <div id="movie-plot"></div>
@@ -92,7 +90,6 @@
             <ul></ul>
         </section> -->
     </main>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./assets/js/script.js"></script>
     <!-- Compressed JavaScript -->
