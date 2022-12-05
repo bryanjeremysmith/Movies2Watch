@@ -49,9 +49,24 @@ function searchIMDB(q){
         return response.json();
     })
     .then(function (data){
-        $("#movie-title").text(data.Title);
-        $("#movie-plot").text(data.Plot);
-        searchYouTube(q + " " + data.Year);
+        if(data.Response === "False")
+        {
+            $("#movie-title").text(data.Error);
+            $("#movie-plot").text("");
+            $('#movie-embedded-video').html("");
+
+            $("#watch-trailer").addClass("hide");
+            $("#add-movie").addClass("hide");
+            $("#cardHolder").show();
+        }
+        else
+        {
+            $("#movie-title").text(data.Title);
+            $("#movie-plot").text(data.Plot);
+            $("#watch-trailer").addClass("visible");
+            $("#add-movie").addClass("visible");
+            searchYouTube(q + " " + data.Year);
+        }
     })
     .catch(function (error){
         console.log(error);
