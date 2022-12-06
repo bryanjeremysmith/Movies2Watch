@@ -61,6 +61,11 @@ main {
     width: 200px;
 }
 
+.addGreenBtnText {
+    background-color: rgb(72, 187, 72) !important;
+}
+
+
 header {
    display: flex;
    justify-content: space-between;

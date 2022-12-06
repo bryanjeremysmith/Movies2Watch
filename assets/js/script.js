@@ -11,6 +11,8 @@ function search() {
     $("#startBtn").hide();
     $("#smallSearch").show();
 };
+//  Add text to button 
+$(".cardBtnHolder > .button").text("+ Add to List");
 
 function appendToMoviesList() {
     var movieList = document.querySelector("#moviesList");
@@ -26,6 +28,11 @@ function appendToMoviesList() {
         searchIMDB(q);
         
     });
+    // remove, add text and clas to the watch to list button 
+    $(".cardBtnHolder > .button").removeClass("addBtnText");
+    $(".cardBtnHolder > .button").text("✓ Added to the List");
+    $(".cardBtnHolder > .button").addClass("addGreenBtnText");
+    
 };
 
 function saveMovieTitle () {
@@ -61,9 +68,24 @@ function searchIMDB(q){
         return response.json();
     })
     .then(function (data){
-        $("#movie-title").text(data.Title);
-        $("#movie-plot").text(data.Plot);
-        searchYouTube(q + " " + data.Year);
+        if(data.Response === "False")
+        {
+            $("#movie-title").text(data.Error);
+            $("#movie-plot").text("");
+            $('#movie-embedded-video').html("");
+
+            $("#watch-trailer").addClass("hide");
+            $("#add-movie").addClass("hide");
+            $("#cardHolder").show();
+        }
+        else
+        {
+            $("#movie-title").text(data.Title);
+            $("#movie-plot").text(data.Plot);
+            $("#watch-trailer").addClass("visible");
+            $("#add-movie").addClass("visible");
+            searchYouTube(q + " " + data.Year);
+        }
     })
     .catch(function (error){
         console.log(error);
@@ -92,3 +114,10 @@ function searchYouTube(q){
         console.log(error);
     });
 }
+
+// enter key 
+$("#query").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        searchAPIs();
+    }
+});
