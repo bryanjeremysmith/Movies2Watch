@@ -19,7 +19,9 @@ function appendToMoviesList() {
     var newMovie = document.createElement("li");
     newMovie.textContent = $("#movie-title").text();
     movieList.appendChild(newMovie);
-
+    
+    saveMovieTitle();
+    
     newMovie.addEventListener("click", function(){
         search();
 
@@ -28,7 +30,7 @@ function appendToMoviesList() {
         searchIMDB(q);
         
     });
-    // remove, add text and clas to the watch to list button 
+    // remove, add text and class to the watch to list button 
     $(".cardBtnHolder > .button").removeClass("addBtnText");
     $(".cardBtnHolder > .button").text("✓ Added to the List");
     $(".cardBtnHolder > .button").addClass("addGreenBtnText");
@@ -36,14 +38,12 @@ function appendToMoviesList() {
 };
 
 function saveMovieTitle () {
-    let movieVal = $("#query").val();
+    let movieVal = $("#movie-title").val();
     movieTitletext.unshift(movieVal);
     window.localStorage.setItem("movieTitletext", JSON.stringify(movieTitleText));
-    $("#moviesList").text("movieTitletext");
+    $("#movie-title").text(movieTitletext);
     console.log(movieTitletext);
-}
-
-saveMovieTitle();
+};
 
 function searchAPIs() {
     search();
