@@ -1,5 +1,6 @@
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
 var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
+let movieTitletext = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
 
 $(document).ready(function() {
     $("#cardHolder").hide();
@@ -23,8 +24,19 @@ function appendToMoviesList() {
         var q = this.textContent;
 
         searchIMDB(q);
+        
     });
 };
+
+function saveMovieTitle () {
+    let movieVal = $("#query").val();
+    movieTitletext.unshift(movieVal);
+    window.localStorage.setItem("movieTitletext", JSON.stringify(movieTitleText));
+    $("#moviesList").text("movieTitletext");
+    console.log(movieTitletext);
+}
+
+saveMovieTitle();
 
 function searchAPIs() {
     search();
