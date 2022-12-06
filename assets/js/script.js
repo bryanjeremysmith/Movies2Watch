@@ -1,6 +1,6 @@
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
 var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
-let movieTitletext = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
+let movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
 
 $(document).ready(function() {
     $("#cardHolder").hide();
@@ -38,11 +38,11 @@ function appendToMoviesList() {
 };
 
 function saveMovieTitle () {
-    let movieVal = $("#movie-title").val();
-    movieTitletext.unshift(movieVal);
-    window.localStorage.setItem("movieTitletext", JSON.stringify(movieTitleText));
-    $("#movie-title").text(movieTitletext);
-    console.log(movieTitletext);
+    let movieVal = $("#movie-title").text();
+    movieTitleText.unshift(movieVal);
+    window.localStorage.setItem("movieTitleText", JSON.stringify(movieTitleText));
+    $("#movie-title").text(movieTitleText);
+    console.log(movieTitleText);
 };
 
 function searchAPIs() {
