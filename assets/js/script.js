@@ -105,7 +105,46 @@ function searchYouTube(q){
 
 // enter key 
 $("#query").on('keyup', function (e) {
+    e.stopPropagation();
     if (e.key === 'Enter' || e.keyCode === 13) {
-        searchAPIs();
+        console.log('key up function works');
+        // searchAPIs();
     }
 });
+
+$("#querySmall").on('keyup', function (e) {
+    e.stopPropagation();
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        console.log('querySmall KEY UP DOESNT inteferae');
+        // searchAPIs();
+    }
+
+});
+
+
+
+// $("#query , #querySmall").on('keyup', function (e) {
+//     if (e.key === 'Enter' || e.keyCode === 13) {
+//         searchAPIs();
+//     }
+//     e.preventDefault();
+// }).focus();
+// $('#query , #querySmall').keyup(function(event){
+
+//     var keycode = (event.keyCode ? event.keyCode : event.which);
+//         if (e.key === 'Enter' || e.keyCode === 13) {
+//         searchAPIs();
+//     }
+//     event.preventDefault();
+// })
+
+
+
+// $('#textbox , #textbox2').keyup(function(event){
+
+//     var keycode = (event.keyCode ? event.keyCode : event.which);
+//     if(keycode == '13'){
+//         alert('You pressed a "enter" key in textbox');  
+//     }
+//     event.preventDefault();
+// }).focus();
