@@ -2,11 +2,14 @@ var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3
 var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
 let movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
 
+//This code is called on startup, when the document is ready
 $(document).ready(function () {
+    getMovieList();
     $("#cardHolder").hide();
     $("#smallSearch").hide();
 });
 
+//This function hides the large search button in the center of the screen, and shows the small search query.
 function search() {
     $("#startBtn").hide();
     $("#smallSearch").show();
@@ -19,12 +22,14 @@ function appendToMoviesList() {
     getMovieList();
 };
 
+//This will save the movie title to the local storage.
 function saveMovieTitle() {
     let movieVal = $("#movie-title").text();
     movieTitleText.unshift(movieVal);
     window.localStorage.setItem("movieTitleText", JSON.stringify(movieTitleText));
 };
 
+//This will grab the movie titles from local storage, then create clickable list items for each movie found in local storage.
 function getMovieList() {
     movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
     var movieList = document.querySelector("#moviesList");
@@ -48,8 +53,7 @@ function getMovieList() {
     }
 };
 
-getMovieList();
-
+//Function to get the search value from #query, then search IMDB.
 function searchAPIs() {
     search();
 
@@ -58,6 +62,7 @@ function searchAPIs() {
     searchIMDB(q);
 }
 
+//Function to get the search value from #querySmall, then search IMDB.
 function searchAPIsSmall() {
     search();
 
@@ -66,6 +71,7 @@ function searchAPIsSmall() {
     searchIMDB(q);
 }
 
+//This queries IMDB with the title and requesting a short plot.
 function searchIMDB(q) {
     var requestIMDB = baseIMDBURL + "&t=" + q + "&plot=short";
     fetch(requestIMDB)
@@ -73,6 +79,7 @@ function searchIMDB(q) {
             return response.json();
         })
         .then(function (data) {
+            //If the data response is "False", then the movie wasn't found
             if (data.Response === "False") {
                 $("#movie-title").text(data.Error);
                 $("#movie-plot").text("");
@@ -82,6 +89,7 @@ function searchIMDB(q) {
                 $("#add-movie").addClass("hide");
                 $("#cardHolder").show();
             }
+            //Otherwise, then populate the values on the page, then query YouTube
             else {
                 $("#movie-title").text(data.Title);
                 $("#movie-plot").text(data.Plot);
@@ -95,6 +103,7 @@ function searchIMDB(q) {
         });
 }
 
+//This queries YouTube appending " trailer" to the end of the movie title and movie year.
 function searchYouTube(q) {
     var requestYouTube = baseYouTubeURL +
         "&q=" + q + " trailer" +
