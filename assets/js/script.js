@@ -10,6 +10,8 @@ function search() {
     $("#startBtn").hide();
     $("#smallSearch").show();
 };
+//  Add text to button 
+$(".cardBtnHolder > .button").text("+ Add to List");
 
 function appendToMoviesList() {
     var movieList = document.querySelector("#moviesList");
@@ -24,6 +26,11 @@ function appendToMoviesList() {
 
         searchIMDB(q);
     });
+    // remove, add text and clas to the watch to list button 
+    $(".cardBtnHolder > .button").removeClass("addBtnText");
+    $(".cardBtnHolder > .button").text("✓ Added to the List");
+    $(".cardBtnHolder > .button").addClass("addGreenBtnText");
+    
 };
 
 function searchAPIs() {
@@ -95,3 +102,10 @@ function searchYouTube(q){
         console.log(error);
     });
 }
+
+// enter key 
+$("#query").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        searchAPIs();
+    }
+});
