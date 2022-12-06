@@ -15,43 +15,36 @@ function search() {
 $(".cardBtnHolder > .button").text("+ Add to List");
 
 function appendToMoviesList() {
-    var movieList = document.querySelector("#moviesList");
-    var newMovie = document.createElement("li");
-    newMovie.textContent = $("#movie-title").text();
-    movieList.appendChild(newMovie);
-
     saveMovieTitle();
-
-    newMovie.addEventListener("click", function () {
-        search();
-
-        var q = this.textContent;
-
-        searchIMDB(q);
-
-    });
-    // remove, add text and class to the watch to list button 
-    $(".cardBtnHolder > .button").removeClass("addBtnText");
-    $(".cardBtnHolder > .button").text("✓ Added to the List");
-    $(".cardBtnHolder > .button").addClass("addGreenBtnText");
-
+    getMovieList();
 };
 
 function saveMovieTitle() {
     let movieVal = $("#movie-title").text();
     movieTitleText.unshift(movieVal);
     window.localStorage.setItem("movieTitleText", JSON.stringify(movieTitleText));
-    // $("#movie-title").text(movieTitleText);
-    console.log(movieTitleText);
 };
 
 function getMovieList() {
-    movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText"));
+    movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
     var movieList = document.querySelector("#moviesList");
+    movieList.innerHTML = "";
     for (let i = 0; i < movieTitleText.length; i++) {
         var newMovie = document.createElement("li");
         newMovie.textContent = movieTitleText[i];
         movieList.appendChild(newMovie);
+
+        newMovie.addEventListener("click", function () {
+            search();
+    
+            var q = this.textContent;
+    
+            searchIMDB(q);    
+        });
+        // remove, add text and class to the watch to list button 
+        $(".cardBtnHolder > .button").removeClass("addBtnText");
+        $(".cardBtnHolder > .button").text("✓ Added to the List");
+        $(".cardBtnHolder > .button").addClass("addGreenBtnText");
     }
 };
 
