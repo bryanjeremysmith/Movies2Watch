@@ -46,7 +46,7 @@ function saveMovieTitle() {
 };
 
 function getMovieList() {
-    movieTitleText = window.localStorage.getItem("movieTitleText");
+    movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText"));
     var movieList = document.querySelector("#moviesList");
     for (let i = 0; i < movieTitleText.length; i++) {
         var newMovie = document.createElement("li");
@@ -55,7 +55,7 @@ function getMovieList() {
     }
 };
 
-
+getMovieList();
 
 function searchAPIs() {
     search();
