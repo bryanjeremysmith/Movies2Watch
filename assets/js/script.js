@@ -154,7 +154,17 @@ function disableAddBtn() {
 }
 // ---- Enter key ----
 $("#query").on('keyup', function(e) {
+    e.stopPropagation();
     if (e.key === 'Enter' || e.keyCode === 13) {
+        console.log('key up function works');
         searchAPIs();
+    }
+});
+
+$("#querySmall").on('keyup', function (e) {
+    e.stopPropagation();
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        console.log('querySmall KEY UP DOESNT inteferae');
+        searchAPIsSmall();
     }
 });
