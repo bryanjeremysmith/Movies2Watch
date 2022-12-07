@@ -1,58 +1,61 @@
+
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
 var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
-let movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
+var movieTitleName = ""; // declare empty var 
+let addRmvBtn = $(".cardBtnHolder > .button");
+
+// --- Read the local storage and set it to a variable ---	
+let movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
 
 $(document).ready(function () {
-    $("#cardHolder").hide();
-    $("#smallSearch").hide();
+    $("#cardHolder").hide(); 
+    $("#smallSearch").hide(); 
+    console.log(movieTitleList); // just checking
 });
 
 function search() {
-    $("#startBtn").hide();
-    $("#smallSearch").show();
+    $("#startBtn").hide(); 
+    $("#smallSearch").show(); 
 };
-//  Add text to button 
-$(".cardBtnHolder > .button").text("+ Add to List");
 
+//  ---- Creating the movie list function----
 function appendToMoviesList() {
     saveMovieTitle();
     getMovieList();
+    disableAddBtn();
 };
 
+// Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
     let movieVal = $("#movie-title").text();
-    movieTitleText.unshift(movieVal);
-    window.localStorage.setItem("movieTitleText", JSON.stringify(movieTitleText));
+    movieTitleList.unshift(movieVal);
+    window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
 };
 
 function getMovieList() {
-    movieTitleText = JSON.parse(window.localStorage.getItem("movieTitleText")) || [];
+    movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
     var movieList = document.querySelector("#moviesList");
     movieList.innerHTML = "";
-    for (let i = 0; i < movieTitleText.length; i++) {
+    for (let i = 0; i < movieTitleList.length; i++) {
         var newMovie = document.createElement("li");
-        newMovie.textContent = movieTitleText[i];
+        newMovie.textContent = movieTitleList[i];
         movieList.appendChild(newMovie);
 
         newMovie.addEventListener("click", function () {
             search();
-    
             var q = this.textContent;
     
             searchIMDB(q);    
-        });
-        // remove, add text and class to the watch to list button 
-        $(".cardBtnHolder > .button").removeClass("addBtnText");
-        $(".cardBtnHolder > .button").text("✓ Added to the List");
-        $(".cardBtnHolder > .button").addClass("addGreenBtnText");
+        }); 
     }
 };
 
 getMovieList();
 
+
+
 function searchAPIs() {
     search();
-
     var q = $('#query').val();
 
     searchIMDB(q);
@@ -60,7 +63,6 @@ function searchAPIs() {
 
 function searchAPIsSmall() {
     search();
-
     var q = $('#querySmall').val();
 
     searchIMDB(q);
@@ -81,19 +83,26 @@ function searchIMDB(q) {
                 $("#watch-trailer").addClass("hide");
                 $("#add-movie").addClass("hide");
                 $("#cardHolder").show();
+                $(".cardBtnHolder").hide(); // hide add button on error
+                
             }
             else {
                 $("#movie-title").text(data.Title);
                 $("#movie-plot").text(data.Plot);
                 $("#watch-trailer").addClass("visible");
                 $("#add-movie").addClass("visible");
-                searchYouTube(q + " " + data.Year);
+                $("#cardHolder").show();
+                $(".cardBtnHolder").show(); // show add button
+                // searchYouTube(q + " " + data.Year); // comment it out when youtube quote is full
+                var movieTitleName = $("#movie-title").text(); //populate var movieTitleName
+                evaluateMovieTitle(movieTitleName);
             }
         })
         .catch(function (error) {
             console.log(error);
         });
 }
+
 
 function searchYouTube(q) {
     var requestYouTube = baseYouTubeURL +
@@ -118,8 +127,27 @@ function searchYouTube(q) {
         });
 }
 
-// enter key 
-$("#query").on('keyup', function (e) {
+// --- Checking the movie title against the movie list ---
+function evaluateMovieTitle (movieTitleName) {
+    console.log(movieTitleName);
+    if (movieTitleList.indexOf(movieTitleName) === -1) { // not repeating name on list
+       //console.log("False"); BLUE BUTTON
+       addRmvBtn.attr("class", "button rounded addBtnText");
+       addRmvBtn.text("+ Add to List");
+       addRmvBtn.attr("onclick","appendToMoviesList()");
+		
+	} else {
+	 disableAddBtn();
+	}
+}
+// --- "Added to the list" disable button ---
+function disableAddBtn() {
+    addRmvBtn.attr("class", "button rounded addGreenBtnText");
+    addRmvBtn.text("✓ Added to the List");
+    addRmvBtn.attr("onclick", "null");
+}
+// ---- Enter key ----
+$("#query").on('keyup', function(e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
         searchAPIs();
     }
