@@ -7,12 +7,15 @@ let addRmvBtn = $(".cardBtnHolder > .button");
 // --- Read the local storage and set it to a variable ---	
 let movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
 
+//This code is called on startup, when the document is ready
 $(document).ready(function () {
+    getMovieList();
     $("#cardHolder").hide(); 
     $("#smallSearch").hide(); 
     console.log(movieTitleList); // just checking
 });
 
+//This function hides the large search button in the center of the screen, and shows the small search query.
 function search() {
     $("#startBtn").hide(); 
     $("#smallSearch").show(); 
@@ -25,6 +28,7 @@ function appendToMoviesList() {
     disableAddBtn();
 };
 
+// This will save the movie title to the local storage.
 // Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
     let movieVal = $("#movie-title").text();
@@ -32,6 +36,7 @@ function saveMovieTitle() {
     window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
 };
 
+//This will grab the movie titles from local storage, then create clickable list items for each movie found in local storage.
 function getMovieList() {
     movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
     var movieList = document.querySelector("#moviesList");
@@ -50,10 +55,7 @@ function getMovieList() {
     }
 };
 
-getMovieList();
-
-
-
+//Function to get the search value from #query, then search IMDB.
 function searchAPIs() {
     search();
     var q = $('#query').val();
@@ -61,6 +63,7 @@ function searchAPIs() {
     searchIMDB(q);
 }
 
+//Function to get the search value from #querySmall, then search IMDB.
 function searchAPIsSmall() {
     search();
     var q = $('#querySmall').val();
@@ -68,6 +71,7 @@ function searchAPIsSmall() {
     searchIMDB(q);
 }
 
+//This queries IMDB with the title and requesting a short plot.
 function searchIMDB(q) {
     var requestIMDB = baseIMDBURL + "&t=" + q + "&plot=short";
     fetch(requestIMDB)
@@ -75,6 +79,7 @@ function searchIMDB(q) {
             return response.json();
         })
         .then(function (data) {
+            //If the data response is "False", then the movie wasn't found
             if (data.Response === "False") {
                 $("#movie-title").text(data.Error);
                 $("#movie-plot").text("");
@@ -86,6 +91,7 @@ function searchIMDB(q) {
                 $(".cardBtnHolder").hide(); // hide add button on error
                 
             }
+            //Otherwise, then populate the values on the page, then query YouTube
             else {
                 $("#movie-title").text(data.Title);
                 $("#movie-plot").text(data.Plot);
@@ -93,7 +99,7 @@ function searchIMDB(q) {
                 $("#add-movie").addClass("visible");
                 $("#cardHolder").show();
                 $(".cardBtnHolder").show(); // show add button
-                // searchYouTube(q + " " + data.Year); // comment it out when youtube quote is full
+                searchYouTube(q + " " + data.Year); // comment it out when youtube quote is full
                 var movieTitleName = $("#movie-title").text(); //populate var movieTitleName
                 evaluateMovieTitle(movieTitleName);
             }
@@ -103,7 +109,7 @@ function searchIMDB(q) {
         });
 }
 
-
+//This queries YouTube appending " trailer" to the end of the movie title and movie year.
 function searchYouTube(q) {
     var requestYouTube = baseYouTubeURL +
         "&q=" + q + " trailer" +
@@ -136,9 +142,9 @@ function evaluateMovieTitle (movieTitleName) {
        addRmvBtn.text("+ Add to List");
        addRmvBtn.attr("onclick","appendToMoviesList()");
 		
-	} else {
-	 disableAddBtn();
-	}
+    } else {
+       disableAddBtn();
+    }
 }
 // --- "Added to the list" disable button ---
 function disableAddBtn() {
