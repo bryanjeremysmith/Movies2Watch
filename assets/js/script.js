@@ -28,6 +28,23 @@ function appendToMoviesList() {
     disableAddBtn();
 };
 
+// --- "remove from list" button ---
+// function removeFromList () {
+//     onclick.addattr.(watchedBtn);
+//     $(".removeBtnHolder").show();
+//     addRmvBtn.attr("class", "button rounded red");
+//     addRmvBtn.text("watched");
+//     addRmvBtn.attr("onClick", "removeFromList()");
+// };
+
+// removeFromList();
+
+// function removeFromWatchlist () {
+//     var watchList =  
+//     if (watchList = appendToMoviesList()) {
+//     }
+// }
+
 // This will save the movie title to the local storage.
 // Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
@@ -152,6 +169,7 @@ function disableAddBtn() {
     addRmvBtn.text("✓ Added to the List");
     addRmvBtn.attr("onclick", "null");
 }
+
 // ---- Enter key ----
 $("#query").on('keyup', function(e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
