@@ -72,21 +72,22 @@ function getMovieList() {
     }
 };
 
-//Function to get the search value from #query, then search IMDB.
+//Function to get the search value from #query or #querySmall (depending on visibility), then search IMDB.
 function searchAPIs() {
-    search();
-    var q = $('#query').val();
+    var q = '';
+
+    if($('#query').is(":visible")){
+        q = $('#query').val();
+    }
+    else {
+        q = $('#querySmall').val();
+    }
 
     searchIMDB(q);
-}
 
-//Function to get the search value from #querySmall, then search IMDB.
-function searchAPIsSmall() {
     search();
-    var q = $('#querySmall').val();
-
-    searchIMDB(q);
 }
+
 
 //This queries IMDB with the title and requesting a short plot.
 function searchIMDB(q) {
@@ -171,8 +172,10 @@ function disableAddBtn() {
 }
 
 // ---- Enter key ----
-$("#query").on('keyup', function(e) {
+$("#query, #querySmall").on('keyup', function(e) {
+    e.stopPropagation();
     if (e.key === 'Enter' || e.keyCode === 13) {
+        console.log('key up function works');
         searchAPIs();
     }
 });
