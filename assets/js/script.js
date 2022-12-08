@@ -52,8 +52,23 @@ function getMovieList() {
     
             searchIMDB(q);    
         }); 
+        $(function () {
+            $('#moviesList').sortable({
+              placeholder: 'ui-state-highlight',
+            });
+          });
+        
     }
 };
+// // Sortable interaction
+// // Sortable interaction
+// $(function () {
+//     $('#moviesList').sortable({
+//       placeholder: 'ui-state-highlight',
+//     });
+//   });
+
+
 
 //Function to get the search value from #query or #querySmall (depending on visibility), then search IMDB.
 function searchAPIs() {
