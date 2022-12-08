@@ -28,22 +28,9 @@ function appendToMoviesList() {
     disableAddBtn();
 };
 
-// --- "remove from list" button ---
-// function removeFromList () {
-//     onclick.addattr.(watchedBtn);
-//     $(".removeBtnHolder").show();
-//     addRmvBtn.attr("class", "button rounded red");
-//     addRmvBtn.text("watched");
-//     addRmvBtn.attr("onClick", "removeFromList()");
-// };
+function removeFromList() {
 
-// removeFromList();
-
-// function removeFromWatchlist () {
-//     var watchList =  
-//     if (watchList = appendToMoviesList()) {
-//     }
-// }
+};
 
 // This will save the movie title to the local storage.
 // Note changed movieTitleText to movieTitleList because of the new variable
@@ -59,9 +46,18 @@ function getMovieList() {
     var movieList = document.querySelector("#moviesList");
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
+        var movie = document.createElement("div");
+        movie.classList.add("flex-inline block");
         var newMovie = document.createElement("li");
         newMovie.textContent = movieTitleList[i];
-        movieList.appendChild(newMovie);
+        // This will add an option to remove the movie from the watchlist
+        var trashcan = document.createElement("button");
+        trashcan.textContent = "🗑️";
+        movie.append(
+            trashcan
+        );
+        movie.appendChild(newMovie);
+        movieList.append(movie);
 
         newMovie.addEventListener("click", function () {
             search();
@@ -69,6 +65,10 @@ function getMovieList() {
     
             searchIMDB(q);    
         }); 
+
+        trashcan.addEventListener("click", function () {
+            console.log(this);
+        });
     }
 };
 
