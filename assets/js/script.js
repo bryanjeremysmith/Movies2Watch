@@ -47,7 +47,7 @@ function getMovieList() {
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
         var movie = document.createElement("div");
-        movie.classList.add("flex-inline block");
+        movie.setAttribute("id", "movie-list");
         var newMovie = document.createElement("li");
         newMovie.textContent = movieTitleList[i];
         // This will add an option to remove the movie from the watchlist
