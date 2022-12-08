@@ -43,6 +43,7 @@ function getMovieList() {
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
         var newMovie = document.createElement("li");
+        newMovie.classList.add("ui-state-default");
         newMovie.textContent = movieTitleList[i];
         movieList.appendChild(newMovie);
 
@@ -161,3 +162,16 @@ $("#query, #querySmall").on('keyup', function(e) {
         searchAPIs();
     }
 });
+
+$(function() {
+    $( "#moviesList" ).sortable({
+        update: function (){
+            console.log("updated");
+            movieTitleList = [];
+            for(var i = 0; i < $( "#moviesList" )[0].children.length; i++){
+                movieTitleList.push($( "#moviesList" )[0].children[i].textContent);
+            }
+            window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+        }
+    });
+ });
