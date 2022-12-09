@@ -3,7 +3,6 @@
     font-family: 'Open Sans', sans-serif !important;
 }
     
-
 body {
     padding: 0px;
     margin: 0px;
@@ -12,26 +11,37 @@ body {
 
 h1 {
     font-weight: 400;
+    color: white !important;
 }
 
-/* added a min width to fix video responsivness */
+h4 {
+    color: #003659 !important;
+}
+
 #container {
     background-color: #ffffff;
     max-width: 1400px;
     min-width: 490px;
     min-height: 700px;
     margin: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
 }
 
 main {
     padding: 10px;
-  }
+}
 
 #logoText {
     font-weight: 800;
-    padding-left: 20px;
     font-size: 30px;
     font-style: italic;
+    margin-top: 10px;
+}
+
+#logoText span {
+    color: #55a8f4;
 }
 
 #mainBox {
@@ -45,20 +55,45 @@ main {
 
 #startBtn {
     padding: 20px;
-    width: 600px;
+    max-width: 600px;
     text-align: center;
     margin: auto;
-    margin-top: 90px !important;
-    
-   
+    margin-top: 80px !important;
 }
+
+.card{
+   margin-bottom: 0px !important;
+}
+
+.medium-9 {
+    margin-top: 40px;
+    background-image: url('/assets/images/Movies2Watch-film-background.jpg');
+    background-size: cover;
+    min-height: 650px !important;
+    width: 100%;
+}
+
 .rounded {
-    border-radius: 15px !important;
+    border-radius: 10px !important;
+}
+
+.search-box {
+    height: 60px !important;
+    font-size: 20px !important;
+    justify-content: center;
 }
 
 .btn-large {
-    font-size: 22px !important;
-    width: 200px;
+    width: 300px;
+    font-size: 32px !important;
+    border-radius: 10px !important;
+    background-color: #dfbd3a !important;
+    line-height: 15px !important;
+}
+
+#query {
+    padding-left: 20px;
+    width: 100%;
 }
 
 .addGreenBtnText {
@@ -71,43 +106,43 @@ header {
    justify-content: space-between;
   
 }
+
 /* changed small search container sizes */
 #smallSearch {
     width: 500px;
     text-align: right;
     padding-right: 20px;
+
 }
 
 #smallSearch .query, .button {
     display: inline-block !important;
-
 }
 
 #smallSearch .query {
-    width: 70%;
+    max-width: 70%;
+    padding-left: 10px;
 }
 
 #smallSearch .button {
     margin-top: 10px;
+    background-color: #dfbd3a;
 }
 
 #cardHolder {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding-top: 20px;
-    margin-left: 40px;
-
+    
 }
 
 #listContainer {
     text-align: center;
     padding: 20px; 
-   
 }
 
 #moviesList li {
-    justify-content: center;
+    justify-content: space-between;
     color: #1779ba;
     margin-top: 10px;
     list-style: none;
@@ -115,36 +150,43 @@ header {
     border-radius: 15px;
     cursor: pointer;
     padding: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
     display: flex;
     flex-direction: row;
     width: 80%;
-    
 }
+
+.savedMovie button {
+    color: #a9a9a9;
+    font-size: 22px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
 .card-section {
     position: relative;
-    padding-bottom: 80px !important;
+    padding-bottom: 82px !important;
 }
 
 .cardBtnHolder {
     bottom: 10px;   
     position: absolute;
-
 }
+
 .buttonAlt {
     background-color: white !important;
     color: #1779ba !important;
     border: 2px solid #1779ba !important;
     margin-left: 15px !important;
-    
 }
-/* Iframe container - needs to be added to the media queries - reduce height for smaller screens */
+
 #movie-embedded-video {
     width: 100%;
     height: 500px; 
 }
 
-#movie-list {
+.savedMovie {
     display: flex;
     flex-direction: row-reverse;
 }
-

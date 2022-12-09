@@ -18,7 +18,7 @@
 <body>
     <main id="container">
         <header>
-            <h2 id="logoText">Movies2Watch</h2> 
+            <h2 id="logoText">Movies<span>2</span>Watch</h2> 
             <!-- second screen -->
             <div id="smallSearch">
                 <input id="querySmall" class="query rounded" placeholder="Search here" type="text" />
@@ -31,7 +31,7 @@
                 <!-- Initial search box -->
                 <div id="startBtn">
                     <h1>Let's find that movie!</h1>
-                    <input id="query" class="rounded" placeholder="Search here" type="text" />
+                    <input id="query" class="rounded search-box " placeholder="Search here" type="text" />
                     <button id="search-button" class="button rounded btn-large" onclick="searchAPIs()">Search</button>
                 </div>
                 <!-- Result Cards, added buttons-->
@@ -50,7 +50,7 @@
             </div>
             <!-- movie list -->
             <div id="listContainer" class="cell medium-6 large-3">
-                <h4> My Watch List</h4><br>
+                <h4><b>My Watch List</b></h4><br>
                 <ul id="moviesList"></ul>
                 
             </div>
@@ -63,5 +63,4 @@
     <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

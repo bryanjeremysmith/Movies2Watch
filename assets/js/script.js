@@ -29,7 +29,6 @@ function appendToMoviesList() {
 };
 
 // This will save the movie title to the local storage.
-// Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
     let movieVal = $("#movie-title").text();
     movieTitleList.unshift(movieVal);
@@ -42,27 +41,25 @@ function getMovieList() {
     var movieList = document.querySelector("#moviesList");
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
-        var movie = document.createElement("div");
-        movie.setAttribute("id", "movie-list");
-        var newMovie = document.createElement("li");
+        var movie = document.createElement("li");
+        movie.setAttribute("class", "savedMovie");
+        var newMovie = document.createElement("span");
         newMovie.textContent = movieTitleList[i];
         // This will add an option to remove the movie from the watchlist
-        var trashcan = document.createElement("button");
-        trashcan.textContent = "🗑️";
-        movie.append(
-            trashcan
-        );
+//----------Changed trashed can to remove button------- 
+        var removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
         movie.appendChild(newMovie);
+        movie.append(removeBtn);
         movieList.append(movie);
-        // 
         newMovie.addEventListener("click", function () {
             search();
             var q = this.textContent;
-    
             searchIMDB(q);    
         }); 
+
         // This will remove array item from local storage
-        trashcan.addEventListener("click", function (event) {
+        removeBtn.addEventListener("click", function (event) {
             // event.stopPropagation(); // needs to be added in at some point
             var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
             this.parentNode.remove();
@@ -105,7 +102,6 @@ function searchIMDB(q) {
                 $("#movie-title").text(data.Error);
                 $("#movie-plot").text("");
                 $('#movie-embedded-video').html("");
-
                 $("#watch-trailer").addClass("hide");
                 $("#add-movie").addClass("hide");
                 $("#cardHolder").show();
