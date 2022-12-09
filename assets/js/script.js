@@ -1,6 +1,6 @@
 
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
-var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
+var baseIMDBURL = "https://www.omdbapi.com/?apikey=9e1ba2cf&";
 var movieTitleName = ""; // declare empty var 
 let addRmvBtn = $(".cardBtnHolder > .button");
 
