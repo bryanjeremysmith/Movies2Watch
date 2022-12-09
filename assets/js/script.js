@@ -181,45 +181,64 @@ $("#query, #querySmall").on("keyup", function (e) {
 });
 
 //-----Code to make list items draggable-----//
-const draggables = document.querySelectorAll('.draggable')
-const containers = document.querySelectorAll('.container')
-
-draggables.forEach((draggable) => {
-  draggable.addEventListener("dragstart", () => {
-    draggable.classList.add("dragging");
-  });
-  //This will revert the opacity after the item is dropped//
-  draggable.addEventListener("dragend", () => {
-    draggable.classList.remove("dragging");
-  });
-});
-
-containers.forEach((container) => {
-  container.addEventListener("dragover", e => {
-    e.preventDefault();  // prevents cancel cursor from appearing//
-    const afterElement = getDragAfterElement(container, e.clientY)  
-    const draggable = document.querySelector(".dragging")
-    if (afterElement == null) {
-        container.appendChild(draggable)
-    } else {
-        container.insertBefore(draggable, afterElement)
-    }
-    
-    
-  });
-});
-// This function will determine the order of the elements based on where our mouse cursor is//
-function getDragAfterElement(container, y) {
-   const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]     //this omits our selected item from the items to place it around//
-
-   return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child }
-        } else {
-             return closest
+$(function() {
+    $( "#moviesList" ).sortable({
+        update: function (){
+            console.log("updated");
+            movieTitleList = [];
+            for(var i = 0; i < $( "#moviesList" )[0].children.length; i++){
+                movieTitleList.push($( "#moviesList" )[0].children[i].textContent);
             }
+            window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+        }
+    });
+  });
 
-    }, { offset: Number.NEGATIVE_INFINITY }).element
-}
+
+
+
+
+
+
+// const draggables = document.querySelectorAll('.draggable')
+// const containers = document.querySelectorAll('.container')
+
+// draggables.forEach((draggable) => {
+//   draggable.addEventListener("dragstart", () => {
+//     draggable.classList.add("dragging");
+//   });
+//   //This will revert the opacity after the item is dropped//
+//   draggable.addEventListener("dragend", () => {
+//     draggable.classList.remove("dragging");
+//   });
+// });
+
+// containers.forEach((container) => {
+//   container.addEventListener("dragover", e => {
+//     e.preventDefault();  // prevents cancel cursor from appearing//
+//     const afterElement = getDragAfterElement(container, e.clientY)  
+//     const draggable = document.querySelector(".dragging")
+//     if (afterElement == null) {
+//         container.appendChild(draggable)
+//     } else {
+//         container.insertBefore(draggable, afterElement)
+//     }
+    
+    
+//   });
+// });
+// // This function will determine the order of the elements based on where our mouse cursor is//
+// function getDragAfterElement(container, y) {
+//    const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]     //this omits our selected item from the items to place it around//
+
+//    return draggableElements.reduce((closest, child) => {
+//         const box = child.getBoundingClientRect()
+//         const offset = y - box.top - box.height / 2
+//         if (offset < 0 && offset > closest.offset) {
+//             return { offset: offset, element: child }
+//         } else {
+//              return closest
+//             }
+
+//     }, { offset: Number.NEGATIVE_INFINITY }).element
+// }
