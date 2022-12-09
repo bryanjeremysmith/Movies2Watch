@@ -1,38 +1,38 @@
-
 var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
-var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
+var baseIMDBURL = "https://www.omdbapi.com/?apikey=9e1ba2cf&";
 var movieTitleName = ""; // declare empty var 
 let addRmvBtn = $(".cardBtnHolder > .button");
 
-// --- Read the local storage and set it to a variable ---	
-let movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
+// --- Read the local storage and set it to a variable ---
+let movieTitleList =
+  JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
 
 //This code is called on startup, when the document is ready
 $(document).ready(function () {
-    getMovieList();
-    $("#cardHolder").hide(); 
-    $("#smallSearch").hide(); 
-    console.log(movieTitleList); // just checking
+  getMovieList();
+  $("#cardHolder").hide();
+  $("#smallSearch").hide();
+  console.log(movieTitleList); // just checking
 });
 
 //This function hides the large search button in the center of the screen, and shows the small search query.
 function search() {
-    $("#startBtn").hide(); 
-    $("#smallSearch").show(); 
-};
+  $("#startBtn").hide();
+  $("#smallSearch").show();
+}
 
 //  ---- Creating the movie list function----
 function appendToMoviesList() {
-    saveMovieTitle();
-    getMovieList();
-    disableAddBtn();
+  saveMovieTitle();
+  getMovieList();
+  disableAddBtn();
 };
 
 // This will save the movie title to the local storage.
 function saveMovieTitle() {
-    let movieVal = $("#movie-title").text();
-    movieTitleList.unshift(movieVal);
-    window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+  let movieVal = $("#movie-title").text();
+  movieTitleList.unshift(movieVal);
+  window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
 };
 
 //This will grab the movie titles from local storage, then create clickable list items for each movie found in local storage.
@@ -128,49 +128,69 @@ function searchIMDB(q) {
 
 //This queries YouTube appending " trailer" to the end of the movie title and movie year.
 function searchYouTube(q) {
-    var requestYouTube = baseYouTubeURL +
-        "&q=" + q + " trailer" +
-        "&part=snippet" +
-        "&order=rating" +
-        "&type=video" +
-        "&videoDefinition=high" +
-        "&videoEmbeddable=true" +
-        "&maxResults=1";
+  var requestYouTube =
+    baseYouTubeURL +
+    "&q=" +
+    q +
+    " trailer" +
+    "&part=snippet" +
+    "&order=rating" +
+    "&type=video" +
+    "&videoDefinition=high" +
+    "&videoEmbeddable=true" +
+    "&maxResults=1";
 
-    fetch(requestYouTube)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            $('#movie-embedded-video').html('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + data.items[0].id.videoId + '?autoplay=1&mute=1"></iframe>');
-            $("#cardHolder").show();
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+  fetch(requestYouTube)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      $("#movie-embedded-video").html(
+        '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' +
+          data.items[0].id.videoId +
+          '?autoplay=1&mute=1"></iframe>'
+      );
+      $("#cardHolder").show();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 // --- Checking the movie title against the movie list ---
-function evaluateMovieTitle (movieTitleName) {
-    console.log(movieTitleName);
-    if (movieTitleList.indexOf(movieTitleName) === -1) { // not repeating name on list
-       //console.log("False"); BLUE BUTTON
-       addRmvBtn.attr("class", "button rounded addBtnText");
-       addRmvBtn.text("+ Add to List");
-       addRmvBtn.attr("onclick","appendToMoviesList()");
-		
-    } else {
-       disableAddBtn();
-    }
+function evaluateMovieTitle(movieTitleName) {
+  console.log(movieTitleName);
+  if (movieTitleList.indexOf(movieTitleName) === -1) {
+    // not repeating name on list
+    //console.log("False"); BLUE BUTTON
+    addRmvBtn.attr("class", "button rounded addBtnText");
+    addRmvBtn.text("+ Add to List");
+    addRmvBtn.attr("onclick", "appendToMoviesList()");
+  } else {
+    disableAddBtn();
+  }
 }
 // --- "Added to the list" disable button ---
 function disableAddBtn() {
-    addRmvBtn.attr("class", "button rounded addGreenBtnText");
-    addRmvBtn.text("✓ Added to the List");
-    addRmvBtn.attr("onclick", "null");
+  addRmvBtn.attr("class", "button rounded addGreenBtnText");
+  addRmvBtn.text("✓ Added to the List");
+  addRmvBtn.attr("onclick", "null");
 }
 
-// ---- Enter key ----
+//-----Code to make list items draggable-----//
+$(function() {
+    $( "#moviesList" ).sortable({
+        update: function (){
+            console.log("updated");
+            movieTitleList = [];
+            for(var i = 0; i < $( "#moviesList" )[0].children.length; i++){
+                movieTitleList.push($( "#moviesList" )[0].children[i].textContent);
+            }
+            window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+        }
+    });
+  });
+
 $("#query, #querySmall").on('keyup', function(e) {
     e.stopPropagation();
     if (e.key === 'Enter' || e.keyCode === 13) {
@@ -178,3 +198,4 @@ $("#query, #querySmall").on('keyup', function(e) {
         searchAPIs();
     }
 });
+
