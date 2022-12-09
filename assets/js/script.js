@@ -184,7 +184,7 @@ $(function() {
             console.log("updated");
             movieTitleList = [];
             for(var i = 0; i < $( "#moviesList" )[0].children.length; i++){
-                movieTitleList.push($( "#moviesList" )[0].children[i].textContent);
+                movieTitleList.push($( "#moviesList" )[0].children[i].textContent.substr(0, $( "#moviesList" )[0].children[i].textContent.length - 1));
             }
             window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
         }
