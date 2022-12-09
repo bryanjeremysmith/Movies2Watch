@@ -29,7 +29,6 @@ function appendToMoviesList() {
 };
 
 // This will save the movie title to the local storage.
-// Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
   let movieVal = $("#movie-title").text();
   movieTitleList.unshift(movieVal);
@@ -42,27 +41,25 @@ function getMovieList() {
     var movieList = document.querySelector("#moviesList");
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
-        var movie = document.createElement("div");
-        movie.setAttribute("id", "movie-list");
-        var newMovie = document.createElement("li");
+        var movie = document.createElement("li");
+        movie.setAttribute("class", "savedMovie");
+        var newMovie = document.createElement("span");
         newMovie.textContent = movieTitleList[i];
         // This will add an option to remove the movie from the watchlist
-        var trashcan = document.createElement("button");
-        trashcan.textContent = "🗑️";
-        movie.append(
-            trashcan
-        );
+//----------Changed trashed can to remove button------- 
+        var removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
         movie.appendChild(newMovie);
+        movie.append(removeBtn);
         movieList.append(movie);
-        // 
         newMovie.addEventListener("click", function () {
             search();
             var q = this.textContent;
-    
             searchIMDB(q);    
         }); 
+
         // This will remove array item from local storage
-        trashcan.addEventListener("click", function (event) {
+        removeBtn.addEventListener("click", function (event) {
             // event.stopPropagation(); // needs to be added in at some point
             var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
             this.parentNode.remove();
@@ -94,39 +91,39 @@ function searchAPIs() {
 
 //This queries IMDB with the title and requesting a short plot.
 function searchIMDB(q) {
-  var requestIMDB = baseIMDBURL + "&t=" + q + "&plot=short";
-  fetch(requestIMDB)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      //If the data response is "False", then the movie wasn't found
-      if (data.Response === "False") {
-        $("#movie-title").text(data.Error);
-        $("#movie-plot").text("");
-        $("#movie-embedded-video").html("");
-
-        $("#watch-trailer").addClass("hide");
-        $("#add-movie").addClass("hide");
-        $("#cardHolder").show();
-        $(".cardBtnHolder").hide(); // hide add button on error
-      }
-      //Otherwise, then populate the values on the page, then query YouTube
-      else {
-        $("#movie-title").text(data.Title);
-        $("#movie-plot").text(data.Plot);
-        $("#watch-trailer").addClass("visible");
-        $("#add-movie").addClass("visible");
-        $("#cardHolder").show();
-        $(".cardBtnHolder").show(); // show add button
-        searchYouTube(q + " " + data.Year); // comment it out when youtube quote is full
-        var movieTitleName = $("#movie-title").text(); //populate var movieTitleName
-        evaluateMovieTitle(movieTitleName);
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    var requestIMDB = baseIMDBURL + "&t=" + q + "&plot=short";
+    fetch(requestIMDB)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            //If the data response is "False", then the movie wasn't found
+            if (data.Response === "False") {
+                $("#movie-title").text(data.Error);
+                $("#movie-plot").text("");
+                $('#movie-embedded-video').html("");
+                $("#watch-trailer").addClass("hide");
+                $("#add-movie").addClass("hide");
+                $("#cardHolder").show();
+                $(".cardBtnHolder").hide(); // hide add button on error
+                
+            }
+            //Otherwise, then populate the values on the page, then query YouTube
+            else {
+                $("#movie-title").text(data.Title);
+                $("#movie-plot").text(data.Plot);
+                $("#watch-trailer").addClass("visible");
+                $("#add-movie").addClass("visible");
+                $("#cardHolder").show();
+                $(".cardBtnHolder").show(); // show add button
+                searchYouTube(q + " " + data.Year); // comment it out when youtube quote is full
+                var movieTitleName = $("#movie-title").text(); //populate var movieTitleName
+                evaluateMovieTitle(movieTitleName);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 //This queries YouTube appending " trailer" to the end of the movie title and movie year.
