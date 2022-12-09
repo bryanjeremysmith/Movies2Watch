@@ -199,16 +199,27 @@ containers.forEach((container) => {
     e.preventDefault();  // prevents cancel cursor from appearing//
     const afterElement = getDragAfterElement(container, e.clientY)  
     const draggable = document.querySelector(".dragging")
-    container.appendChild(draggable)
+    if (afterElement == null) {
+        container.appendChild(draggable)
+    } else {
+        container.insertBefore(draggable, afterElement)
+    }
+    
+    
   });
 });
 // This function will determine the order of the elements based on where our mouse cursor is//
 function getDragAfterElement(container, y) {
    const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]     //this omits our selected item from the items to place it around//
 
-    draggableElements.reduce((closest, child) => {
+   return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+             return closest
+            }
 
-
-    }, {offset: Number.POSITIVE_INFINITY})
+    }, { offset: Number.NEGATIVE_INFINITY }).element
 }
