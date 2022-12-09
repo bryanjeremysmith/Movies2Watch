@@ -137,6 +137,17 @@ header {
     margin-left: 15px !important;
     
 }
+
+/* draggable feature for list items */
+.draggable {
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: .5;
+}
+
+
 /* Iframe container - needs to be added to the media queries - reduce height for smaller screens */
 #movie-embedded-video {
     width: 100%;
