@@ -37,5 +37,7 @@ Thank you to https://www.youtube.com/ and https://www.imdb.com/ for use of their
 - Search for a movie by title.
 - Watch movie trailers and read a synopsis of that film.
 - Add movies to a watch list and be able to check off, or remove a movie that you have watched.
+- Rearrange the movies in the list.
+- Grab and reorder the list.
 
 
