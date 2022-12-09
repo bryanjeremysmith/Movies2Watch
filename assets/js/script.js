@@ -77,12 +77,15 @@ function searchAPIs() {
     var q = '';
 
     if($('#query').is(":visible")){
-        q = $('#query').val();
+        q = $('#query').val().trim();
     }
     else {
-        q = $('#querySmall').val();
+        q = $('#querySmall').val().trim();
     }
 
+    if(q === ''){
+      return;
+    }
     searchIMDB(q);
 
     search();
