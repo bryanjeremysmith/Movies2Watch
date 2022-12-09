@@ -117,6 +117,7 @@ header {
     padding: 7px;
     display: flex;
     flex-direction: row;
+    width: 80%;
     
 }
 .card-section {
@@ -146,3 +147,4 @@ header {
     display: flex;
     flex-direction: row-reverse;
 }
+

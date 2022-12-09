@@ -54,16 +54,16 @@ function getMovieList() {
         );
         movie.appendChild(newMovie);
         movieList.append(movie);
-
+        // 
         newMovie.addEventListener("click", function () {
             search();
             var q = this.textContent;
     
             searchIMDB(q);    
         }); 
-        // This will remove item from local storage
-        trashcan.addEventListener("click", function () {
-            console.log(this);
+        // This will remove array item from local storage
+        trashcan.addEventListener("click", function (event) {
+            // event.stopPropagation(); // needs to be added in at some point
             var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
             this.parentNode.remove();
             var deletedMovieTitle = movieTitleList.splice(index, 1);
