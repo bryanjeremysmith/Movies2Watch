@@ -28,10 +28,6 @@ function appendToMoviesList() {
     disableAddBtn();
 };
 
-function removeFromList() {
-
-};
-
 // This will save the movie title to the local storage.
 // Note changed movieTitleText to movieTitleList because of the new variable
 function saveMovieTitle() {
@@ -47,7 +43,7 @@ function getMovieList() {
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
         var movie = document.createElement("div");
-        movie.classList.add("flex-inline block");
+        movie.classList.add("flex");
         var newMovie = document.createElement("li");
         newMovie.textContent = movieTitleList[i];
         // This will add an option to remove the movie from the watchlist
@@ -65,9 +61,16 @@ function getMovieList() {
     
             searchIMDB(q);    
         }); 
-
+        // This will remove item from local storage
         trashcan.addEventListener("click", function () {
             console.log(this);
+            var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
+            this.parentNode.remove();
+            var deletedMovieTitle = movieTitleList.splice(index, 1);
+            localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+            if(deletedMovieTitle == $("#movie-title").text()){
+                evaluateMovieTitle(deletedMovieTitle);
+            }
         });
     }
 };
