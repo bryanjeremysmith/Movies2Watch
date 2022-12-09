@@ -115,6 +115,9 @@ header {
     border-radius: 15px;
     cursor: pointer;
     padding: 7px;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
     
 }
 .card-section {
@@ -138,5 +141,10 @@ header {
 #movie-embedded-video {
     width: 100%;
     height: 500px; 
+}
+
+#movie-list {
+    display: flex;
+    flex-direction: row-reverse;
 }
 

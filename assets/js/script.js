@@ -42,16 +42,36 @@ function getMovieList() {
     var movieList = document.querySelector("#moviesList");
     movieList.innerHTML = "";
     for (let i = 0; i < movieTitleList.length; i++) {
+        var movie = document.createElement("div");
+        movie.setAttribute("id", "movie-list");
         var newMovie = document.createElement("li");
         newMovie.textContent = movieTitleList[i];
-        movieList.appendChild(newMovie);
-
+        // This will add an option to remove the movie from the watchlist
+        var trashcan = document.createElement("button");
+        trashcan.textContent = "🗑️";
+        movie.append(
+            trashcan
+        );
+        movie.appendChild(newMovie);
+        movieList.append(movie);
+        // 
         newMovie.addEventListener("click", function () {
             search();
             var q = this.textContent;
     
             searchIMDB(q);    
         }); 
+        // This will remove array item from local storage
+        trashcan.addEventListener("click", function (event) {
+            // event.stopPropagation(); // needs to be added in at some point
+            var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
+            this.parentNode.remove();
+            var deletedMovieTitle = movieTitleList.splice(index, 1);
+            localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+            if(deletedMovieTitle == $("#movie-title").text()){
+                evaluateMovieTitle(deletedMovieTitle);
+            }
+        });
     }
 };
 
@@ -153,6 +173,7 @@ function disableAddBtn() {
     addRmvBtn.text("✓ Added to the List");
     addRmvBtn.attr("onclick", "null");
 }
+
 // ---- Enter key ----
 $("#query, #querySmall").on('keyup', function(e) {
     e.stopPropagation();
