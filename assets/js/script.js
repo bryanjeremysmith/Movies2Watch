@@ -1,7 +1,6 @@
-var baseYouTubeURL =
-  "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
-var baseIMDBURL = "http://www.omdbapi.com/?apikey=9e1ba2cf&";
-var movieTitleName = ""; // declare empty var
+var baseYouTubeURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAS3ZMf20tOKozGt4fbv5HHPCGhFEZFuco";
+var baseIMDBURL = "https://www.omdbapi.com/?apikey=9e1ba2cf&";
+var movieTitleName = ""; // declare empty var 
 let addRmvBtn = $(".cardBtnHolder > .button");
 
 // --- Read the local storage and set it to a variable ---
@@ -27,7 +26,7 @@ function appendToMoviesList() {
   saveMovieTitle();
   getMovieList();
   disableAddBtn();
-}
+};
 
 // This will save the movie title to the local storage.
 // Note changed movieTitleText to movieTitleList because of the new variable
@@ -35,54 +34,63 @@ function saveMovieTitle() {
   let movieVal = $("#movie-title").text();
   movieTitleList.unshift(movieVal);
   window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
-}
+};
 
 //This will grab the movie titles from local storage, then create clickable list items for each movie found in local storage.
 function getMovieList() {
-  movieTitleList =
-    JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
-  var movieList = document.querySelector("#moviesList");
-  movieList.innerHTML = "";
-  for (let i = 0; i < movieTitleList.length; i++) {
-    var newMovie = document.createElement("li");
-    newMovie.textContent = movieTitleList[i];
-    movieList.appendChild(newMovie);
-
-    newMovie.addEventListener("click", function () {
-      search();
-      var q = this.textContent;
-
-      searchIMDB(q);
-    });
-    $(function () {
-      $("#moviesList").sortable({
-        placeholder: "ui-state-highlight",
-      });
-    });
-  }
-}
-// // Sortable interaction
-// // Sortable interaction
-// $(function () {
-//     $('#moviesList').sortable({
-//       placeholder: 'ui-state-highlight',
-//     });
-//   });
+    movieTitleList = JSON.parse(window.localStorage.getItem("movieTitleList")) || [];
+    var movieList = document.querySelector("#moviesList");
+    movieList.innerHTML = "";
+    for (let i = 0; i < movieTitleList.length; i++) {
+        var movie = document.createElement("div");
+        movie.setAttribute("id", "movie-list");
+        var newMovie = document.createElement("li");
+        newMovie.textContent = movieTitleList[i];
+        // This will add an option to remove the movie from the watchlist
+        var trashcan = document.createElement("button");
+        trashcan.textContent = "🗑️";
+        movie.append(
+            trashcan
+        );
+        movie.appendChild(newMovie);
+        movieList.append(movie);
+        // 
+        newMovie.addEventListener("click", function () {
+            search();
+            var q = this.textContent;
+    
+            searchIMDB(q);    
+        }); 
+        // This will remove array item from local storage
+        trashcan.addEventListener("click", function (event) {
+            // event.stopPropagation(); // needs to be added in at some point
+            var index = movieTitleList.indexOf(this.parentNode.children[0].textContent);
+            this.parentNode.remove();
+            var deletedMovieTitle = movieTitleList.splice(index, 1);
+            localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
+            if(deletedMovieTitle == $("#movie-title").text()){
+                evaluateMovieTitle(deletedMovieTitle);
+            }
+        });
+    }
+};
 
 //Function to get the search value from #query or #querySmall (depending on visibility), then search IMDB.
 function searchAPIs() {
-  var q = "";
+    var q = '';
 
-  if ($("#query").is(":visible")) {
-    q = $("#query").val();
-  } else {
-    q = $("#querySmall").val();
-  }
+    if($('#query').is(":visible")){
+        q = $('#query').val();
+    }
+    else {
+        q = $('#querySmall').val();
+    }
 
-  searchIMDB(q);
+    searchIMDB(q);
 
-  search();
+    search();
 }
+
 
 //This queries IMDB with the title and requesting a short plot.
 function searchIMDB(q) {
@@ -171,14 +179,6 @@ function disableAddBtn() {
   addRmvBtn.text("✓ Added to the List");
   addRmvBtn.attr("onclick", "null");
 }
-// ---- Enter key ----
-$("#query, #querySmall").on("keyup", function (e) {
-  e.stopPropagation();
-  if (e.key === "Enter" || e.keyCode === 13) {
-    console.log("key up function works");
-    searchAPIs();
-  }
-});
 
 //-----Code to make list items draggable-----//
 $(function() {
@@ -194,51 +194,11 @@ $(function() {
     });
   });
 
+$("#query, #querySmall").on('keyup', function(e) {
+    e.stopPropagation();
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        console.log('key up function works');
+        searchAPIs();
+    }
+});
 
-
-
-
-
-
-// const draggables = document.querySelectorAll('.draggable')
-// const containers = document.querySelectorAll('.container')
-
-// draggables.forEach((draggable) => {
-//   draggable.addEventListener("dragstart", () => {
-//     draggable.classList.add("dragging");
-//   });
-//   //This will revert the opacity after the item is dropped//
-//   draggable.addEventListener("dragend", () => {
-//     draggable.classList.remove("dragging");
-//   });
-// });
-
-// containers.forEach((container) => {
-//   container.addEventListener("dragover", e => {
-//     e.preventDefault();  // prevents cancel cursor from appearing//
-//     const afterElement = getDragAfterElement(container, e.clientY)  
-//     const draggable = document.querySelector(".dragging")
-//     if (afterElement == null) {
-//         container.appendChild(draggable)
-//     } else {
-//         container.insertBefore(draggable, afterElement)
-//     }
-    
-    
-//   });
-// });
-// // This function will determine the order of the elements based on where our mouse cursor is//
-// function getDragAfterElement(container, y) {
-//    const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]     //this omits our selected item from the items to place it around//
-
-//    return draggableElements.reduce((closest, child) => {
-//         const box = child.getBoundingClientRect()
-//         const offset = y - box.top - box.height / 2
-//         if (offset < 0 && offset > closest.offset) {
-//             return { offset: offset, element: child }
-//         } else {
-//              return closest
-//             }
-
-//     }, { offset: Number.NEGATIVE_INFINITY }).element
-// }
