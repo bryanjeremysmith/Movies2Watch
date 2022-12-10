@@ -203,3 +203,53 @@ header {
     display: flex;
     flex-direction: row-reverse;
 }
+
+.errorHeader {
+    text-align: center;
+    padding-top: 50px;
+    font-size: 36px;
+}
+
+.errorSubheader {
+    text-align: center;
+}
+#movie-plot a {
+    font-weight: bold;
+}
+
+
+/*  ---- added media queries */
+@media screen and (max-width: 1040px)  {
+    .cell {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 680px)  {
+ header {
+    display: block;
+ }
+ #smallSearch {
+    width: 100%;
+    padding: 0px;
+    text-align: center;
+ }
+ #logoText {
+    text-align: center;
+ }
+ .btn-large {
+    font-size: 20px !important;
+ }
+ #startBtn h1 {   
+    font-size: 40px;
+    line-height: 40px;
+    padding-bottom: 10px;
+}
+#startBtn {
+    margin-top: 30px !important;
+}
+.medium-9 {
+    min-height: 400px !important;
+    margin-top: 20px;
+}
+}
