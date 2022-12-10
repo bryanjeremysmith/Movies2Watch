@@ -46,7 +46,6 @@ function getMovieList() {
         var newMovie = document.createElement("span");
         newMovie.textContent = movieTitleList[i];
         // This will add an option to remove the movie from the watchlist
-//----------Changed trashed can to remove button------- 
         var removeBtn = document.createElement("button");
         removeBtn.textContent = "×";
         movie.appendChild(newMovie);
@@ -187,7 +186,7 @@ $(function() {
             console.log("updated");
             movieTitleList = [];
             for(var i = 0; i < $( "#moviesList" )[0].children.length; i++){
-                movieTitleList.push($( "#moviesList" )[0].children[i].textContent);
+              movieTitleList.push($( "#moviesList" )[0].children[i].textContent.substr(0, $( "#moviesList" )[0].children[i].textContent.length - 1));
             }
             window.localStorage.setItem("movieTitleList", JSON.stringify(movieTitleList));
         }
@@ -202,3 +201,11 @@ $("#query, #querySmall").on('keyup', function(e) {
     }
 });
 
+//Reload page by clicking the logo
+$("#logoText").on("click", pageRefresh);
+
+function pageRefresh() {
+  console.log("click logo");
+  location.reload(true);
+  
+}

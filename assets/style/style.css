@@ -38,6 +38,7 @@ main {
     font-size: 30px;
     font-style: italic;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 #logoText span {
