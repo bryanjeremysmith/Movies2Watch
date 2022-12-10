@@ -217,6 +217,11 @@ header {
     font-weight: bold;
 }
 
+.savedMovie span {
+    width: 80%;
+    text-align: left;
+}
+
 
 /*  ---- added media queries */
 @media screen and (max-width: 1040px)  {
