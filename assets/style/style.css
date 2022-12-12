@@ -69,7 +69,7 @@ main {
 
 .medium-9 {
     margin-top: 40px;
-    background-image: url('/assets/images/Movies2Watch-film-background.jpg');
+    background-image: url('../images/Movies2Watch-film-background.jpg');
     background-size: cover;
     min-height: 650px !important;
     width: 100%;
