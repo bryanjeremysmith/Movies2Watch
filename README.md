@@ -14,7 +14,7 @@ Github Repository: https://github.com/bryanjeremysmith/Movies2Watch
 
 Live URL: https://bryanjeremysmith.github.io/Movies2Watch
 
-![img](./Assets/images/) (PLACE HOLDER FOR SCREENSHOT)
+[Movies2Watch.webm](https://user-images.githubusercontent.com/113069298/207410259-77ccec3a-2177-4968-a189-953babe61d7a.webm)
     
 ## Credits
 
