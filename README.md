@@ -38,3 +38,5 @@ Thank you to https://www.youtube.com/ and https://www.imdb.com/ for use of their
 - Add movies to a watch list and be able to check off, or remove a movie that you have watched.
 - Rearrange the movies in the list.
 - Grab and reorder the list.
+
+# Special thank you to my team group 5 :)
